@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 
 
 const Shortener = () => {
@@ -24,7 +24,7 @@ const Shortener = () => {
         const data = {...url};
 
         // send to Server
-        fetch('http://localhost:5000/shortUrl', {
+        fetch('http://localhost:5000/url', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,25 +44,25 @@ const Shortener = () => {
 
     return (
         <div>
-            <Container>
-                <h1 className="mt-3 mb-5"> URL Shortener</h1>
-                <Form onSubmit={handleUrlSubmit}>
-                    <Row className="align-items-center">
-                        <Col sm={8} className="my-1">
-                        
-                        <Form.Control 
-                        onChange={handleOnChange}
-                        name="longUrl"
-                        id="inlineFormInputName" placeholder="Long URL" />
-                        </Col>
+            
+            <h1 className="mt-3 mb-5"> URL Shortener</h1>
+            <Form onSubmit={handleUrlSubmit}>
+                <Row className="align-items-center">
+                    <Col sm={9} className="my-1">
                     
-                        
-                        <Col xs="auto" className="my-1">
-                        <Button type="submit">Submit</Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Container>
+                    <Form.Control 
+                    onChange={handleOnChange}
+                    name="longUrl"
+                    id="inlineFormInputName" placeholder="Long URL" />
+                    </Col>
+                
+                    
+                    <Col xs="auto" className="my-1">
+                    <Button type="submit">Submit</Button>
+                    </Col>
+                </Row>
+            </Form>
+            
         </div>
     );
 };
