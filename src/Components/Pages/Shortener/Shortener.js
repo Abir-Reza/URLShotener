@@ -3,8 +3,8 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 
 
 const Shortener = () => {
-    let [url, setUrl] = useState({});
-    
+    const [url, setUrl] = useState({});
+        
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -12,17 +12,16 @@ const Shortener = () => {
         
         const newUrl ={...url};
         newUrl[field] = value;
-        setUrl(newUrl);
-        
-        
-
+        setUrl(newUrl);        
     }
 
     const handleUrlSubmit = (e) => {
-        e.preventDefault();
-        
-        const data = {...url};
+        e.preventDefault();     
+        const data = {
+            ...url
+        };
 
+       console.log(data); 
         // send to Server
         fetch('http://localhost:5000/url', {
             method: 'POST',
@@ -36,8 +35,7 @@ const Shortener = () => {
             console.log("Sent to server : ", data);
 
         })
-
-        
+       
         window.location.reload(false);
 
     }
@@ -55,8 +53,7 @@ const Shortener = () => {
                     name="longUrl"
                     id="inlineFormInputName" placeholder="Long URL" />
                     </Col>
-                
-                    
+                                    
                     <Col xs="auto" className="my-1">
                     <Button type="submit">Submit</Button>
                     </Col>
