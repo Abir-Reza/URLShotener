@@ -3,8 +3,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 
 
 const Shortener = () => {
-    const [url, setUrl] = useState({});
-        
+    const [url, setUrl] = useState({});       
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -16,15 +15,27 @@ const Shortener = () => {
     }
 
     const handleUrlSubmit = (e) => {
-        e.preventDefault();     
+        e.preventDefault(); 
         const data = {
             ...url
         };
+        
+        // SAVE url to database
+        saveUrl(data,'POST');
 
-       console.log(data); 
+        // update shorten attempt count 
+        handleAttemptCount(data);
+                    
+        window.location.reload(true);
+
+    }
+
+
+    const saveUrl =(data,method) => {
+      
         // send to Server
         fetch('http://localhost:5000/url', {
-            method: 'POST',
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -35,14 +46,16 @@ const Shortener = () => {
             console.log("Sent to server : ", data);
 
         })
-       
-        window.location.reload(false);
 
     }
 
+    const handleAttemptCount = (data) => {
+        saveUrl(data,'PUT');
+    }
+
+   
     return (
-        <div>
-            
+        <div>          
             <h1 className="mt-3 mb-5"> URL Shortener</h1>
             <Form onSubmit={handleUrlSubmit}>
                 <Row className="align-items-center">

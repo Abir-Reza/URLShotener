@@ -30,7 +30,7 @@ const DisplayTable = () => {
                 <td>{url.longUrl}</td>
                 <td><a href={url.shortUrl} onClick={() => handleVisitCount(url._id)}  target = "_blank">{url.urlcode}</a> </td>
 
-                <td>"Working on"</td>
+                <td>{url.attemptCount}</td>
                 <td>{url.visitCount}</td>
                     
             </tr>
