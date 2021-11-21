@@ -7,7 +7,7 @@ const DisplayTable = () => {
     const [urlList, setUrlList] = useState([]);
 
     useEffect( () => {
-        fetch('http://localhost:5000/')
+        fetch('https://floating-beach-36985.herokuapp.com/')
         .then(res=> res.json())
         .then(data => {
             setUrlList(data);
@@ -16,7 +16,7 @@ const DisplayTable = () => {
 
     const handleVisitCount= (id) => {
         
-         fetch(`http://localhost:5000/url/visits/${id}`, {
+         fetch(`https://floating-beach-36985.herokuapp.com/url/visits/${id}`, {
              method: 'PUT'
       
          })

@@ -11,8 +11,10 @@ const Shortener = () => {
         
         const newUrl ={...url};
         newUrl[field] = value;
-        setUrl(newUrl);        
+        setUrl(newUrl);  
+       
     }
+    
 
     const handleUrlSubmit = (e) => {
         e.preventDefault(); 
@@ -26,15 +28,15 @@ const Shortener = () => {
         // update shorten attempt count 
         handleAttemptCount(data);
                     
-        window.location.reload(true);
-
+        document.getElementById("form").reset();
+        
     }
 
 
     const saveUrl =(data,method) => {
       
         // send to Server
-        fetch('http://localhost:5000/url', {
+        fetch('https://floating-beach-36985.herokuapp.com/url', {
             method: method,
             headers: {
                 'Content-Type': 'application/json'
@@ -57,7 +59,7 @@ const Shortener = () => {
     return (
         <div>          
             <h1 className="mt-3 mb-5"> URL Shortener</h1>
-            <Form onSubmit={handleUrlSubmit}>
+            <Form id="form" onSubmit={handleUrlSubmit}>
                 <Row className="align-items-center">
                     <Col sm={9} className="my-1">
                     
