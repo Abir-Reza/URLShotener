@@ -69,8 +69,6 @@ const Shortener = () => {
         const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
         const flag =regex.test(url);
-        console.log(url);
-        console.log(flag);
         return flag;       
 
     }
