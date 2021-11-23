@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 
 
 const Shortener = () => {
-    const [url, setUrl] = useState({});       
+    const [url, setUrl] = useState({});  
+    const [error, setError] = useState("");    
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -22,13 +23,23 @@ const Shortener = () => {
             ...url
         };
         
-        // SAVE url to database
-        saveUrl(data,'POST');
+                
+        if( isValidUrl(data.longUrl)){
 
-        // update shorten attempt count 
-        handleAttemptCount(data);
-                    
-        document.getElementById("form").reset();
+            // SAVE url to database
+            saveUrl(data,'POST');
+
+            // update shorten attempt count 
+            handleAttemptCount(data);
+            setError('');
+            setUrl({});  
+            document.getElementById("form").reset();
+        }
+        else{
+            setError("Invalid URL. Insert a non-empty valid URL ");
+            document.getElementById("form").reset();
+            return;
+        }
         
     }
 
@@ -43,22 +54,27 @@ const Shortener = () => {
             },
             body: JSON.stringify(data)
         })
-        .then(res => res.json())
-        .then(data =>{
-            console.log("Sent to server : ", data);
-
-        })
-
+        .then(res =>{
+            res.json();
+        } )
+       
     }
 
     const handleAttemptCount = (data) => {
         saveUrl(data,'PUT');
     }
 
+    const isValidUrl =(url) => {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+
+        const flag =regex.test(url);
+        return flag;       
+
+    }
    
     return (
         <div>          
-            <h1 className="mt-3 mb-5"> URL Shortener</h1>
+            <h1 className="mt-3 mb-5"> </h1>
             <Form id="form" onSubmit={handleUrlSubmit}>
                 <Row className="align-items-center">
                     <Col sm={9} className="my-1">
@@ -74,6 +90,11 @@ const Shortener = () => {
                     </Col>
                 </Row>
             </Form>
+
+            <div>
+                { error && <Alert variant={"danger"}>{error}</Alert>}    
+            </div>
+            
             
         </div>
     );
