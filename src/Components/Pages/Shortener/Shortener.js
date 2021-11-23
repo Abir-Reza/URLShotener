@@ -19,20 +19,21 @@ const Shortener = () => {
 
     const handleUrlSubmit = (e) => {
         e.preventDefault(); 
-        const data = {
+        let data = {
             ...url
         };
         
                 
-        if( isValidUrl(data.longUrl)){
-
+        if( isValidUrl(data.longUrl)){ 
             // SAVE url to database
             saveUrl(data,'POST');
 
             // update shorten attempt count 
             handleAttemptCount(data);
+
             setError('');
-            setUrl({});  
+            // setUrl({}); 
+            data= {};
             document.getElementById("form").reset();
         }
         else{
@@ -68,6 +69,8 @@ const Shortener = () => {
         const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
         const flag =regex.test(url);
+        console.log(url);
+        console.log(flag);
         return flag;       
 
     }
