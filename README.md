@@ -34,7 +34,20 @@ If the URL is valid, the URl is sent to server, server checks if the URL already
  User gets a list containing LongUrl, short code, attempt to shorten and number of total visit by redirecting short code. <br /> 
  When user clicks the short code, server collects the respective longURl from database and redirects to the original URL and increments the visitCount by 1. For better understanding a figuare of client,server,database communication attached -
 
-![alt text](https://github.com/Abir-Reza/URLShotener/blob/main/DataFlow-URLShortener.jpg)
+
+<img src="https://github.com/Abir-Reza/URLShotener/blob/main/ImageReadME/DataFlow-URLShortener.jpg" width="80%">
+
+#### Issue while search existing URL:
+If there is a lot of URL in database that  already shortened, it is difficult to search in normal way. MongoDb offers a solution for this called "Indexing". The idea is, rather than searching from the whole collection, it creates a separate index. So when ever anyone search by specific item it directly points to the index corresponding that item. By default "_id" is index in mongoDB, But developer can create index according to their need.  <br />
+The image shows that before indexing , searching longUrl need all documents to be examined. <br />
+
+<img src="https://github.com/Abir-Reza/URLShotener/blob/main/ImageReadME/BeforeIndexing.png" width="80%">
+<br />
+The image shows that after indexing , only corresponding document is searched. <br />
+<img src="https://github.com/Abir-Reza/URLShotener/blob/main/ImageReadME/AfterIndexing.png" width="80%">
+ <br />
+
+
 
 #### Encoding Algorithm:
 To compute unique shortened code , I used **Base62** convertion. That means, the generated strings contain letters from **[A-z,a-z,0-9]** and in total it is 64.
